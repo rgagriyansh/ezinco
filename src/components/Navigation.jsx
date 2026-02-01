@@ -19,6 +19,7 @@ export function Navigation() {
     { label: 'How it Works', href: '/how-it-works', isPage: true },
     { label: 'Pricing', href: '/pricing', isPage: true },
     { label: 'Blog', href: '/blog', isPage: true },
+    { label: 'Partner', href: '/partner', isPage: true },
     { label: 'Contact', href: '/contact', isPage: true },
   ]
 
