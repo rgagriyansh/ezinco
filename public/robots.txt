@@ -2,9 +2,8 @@
 User-agent: *
 Allow: /
 
-# Sitemaps
+# Sitemap
 Sitemap: https://ezincorporate.in/sitemap.xml
-Sitemap: https://ezinco.vercel.app/sitemap.xml
 
 # Disallow admin paths
 Disallow: /admin

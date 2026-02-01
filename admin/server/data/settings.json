@@ -1,9 +1,9 @@
 {
-  "autoPostEnabled": false,
+  "autoPostEnabled": true,
   "postIntervalMinutes": 30,
   "maxPostsPerDay": 48,
-  "defaultCTA": "Ready to start your business? Visit EZincorporation.in for expert assistance with company registration, compliance, and more!",
-  "websiteUrl": "https://ezincorporation.in",
+  "defaultCTA": "Ready to start your business? Visit EZincorporate.in for expert assistance with company registration, GST filing, Startup India registration, and more! Get started today with our verified CA network.",
+  "websiteUrl": "https://ezincorporate.in",
   "openaiApiKey": "",
   "humanizerApiKey": "",
   "humanizerApiUrl": "https://v2-humanizer.rephrasy.ai/api"
