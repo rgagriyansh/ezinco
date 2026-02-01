@@ -17,8 +17,9 @@ export function Navigation() {
   const navItems = [
     { label: 'Features', href: '/#features' },
     { label: 'How it Works', href: '/how-it-works', isPage: true },
-    { label: 'Pricing', href: '/#pricing' },
+    { label: 'Pricing', href: '/pricing', isPage: true },
     { label: 'Blog', href: '/blog', isPage: true },
+    { label: 'Contact', href: '/contact', isPage: true },
   ]
 
   return (
@@ -70,12 +71,12 @@ export function Navigation() {
 
             {/* CTA Buttons */}
             <div className="hidden md:flex items-center gap-4">
-              <a href="#" className="text-text-muted hover:text-text transition-colors duration-300 text-sm font-medium">
-                Login
-              </a>
-              <a href="#" className="btn-primary text-sm">
+              <Link to="/pricing" className="text-text-muted hover:text-text transition-colors duration-300 text-sm font-medium">
+                Calculate Price
+              </Link>
+              <Link to="/contact" className="btn-primary text-sm">
                 Get Started
-              </a>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -126,10 +127,20 @@ export function Navigation() {
                 </motion.div>
               ))}
               <div className="pt-6 border-t border-border flex flex-col gap-4">
-                <a href="#" className="text-text-muted text-lg">Login</a>
-                <a href="#" className="btn-primary text-center">
+                <Link 
+                  to="/pricing" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-text-muted text-lg"
+                >
+                  Calculate Price
+                </Link>
+                <Link 
+                  to="/contact" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="btn-primary text-center"
+                >
                   Get Started
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>

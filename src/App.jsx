@@ -20,6 +20,8 @@ import {
 import { HowItWorksPage } from './pages/HowItWorksPage'
 import { BlogListPage } from './pages/BlogListPage'
 import { BlogPostPage } from './pages/BlogPostPage'
+import { ContactPage } from './pages/ContactPage'
+import { PricingCalculatorPage } from './pages/PricingCalculatorPage'
 
 function HomePage() {
   return (
@@ -54,6 +56,8 @@ function AppContent() {
           <Route path="/how-it-works" element={<HowItWorksPage />} />
           <Route path="/blog" element={<BlogListPage />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/pricing" element={<PricingCalculatorPage />} />
         </Routes>
       </main>
       {/* Hide footer padding on blog pages to account for fixed CTA */}

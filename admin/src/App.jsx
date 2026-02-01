@@ -6,7 +6,8 @@ import {
   Settings, 
   Clock, 
   Tags,
-  Zap
+  Zap,
+  Users
 } from 'lucide-react'
 
 // Pages
@@ -16,6 +17,7 @@ import BlogEditor from './pages/BlogEditor'
 import Keywords from './pages/Keywords'
 import Scheduler from './pages/Scheduler'
 import SettingsPage from './pages/Settings'
+import { Leads } from './pages/Leads'
 
 function Sidebar() {
   const navItems = [
@@ -24,6 +26,7 @@ function Sidebar() {
     { to: '/editor', icon: PenTool, label: 'Create Blog' },
     { to: '/keywords', icon: Tags, label: 'Keywords' },
     { to: '/scheduler', icon: Clock, label: 'Scheduler' },
+    { to: '/leads', icon: Users, label: 'Leads' },
     { to: '/settings', icon: Settings, label: 'Settings' },
   ]
 
@@ -69,6 +72,7 @@ function App() {
             <Route path="/editor/:id" element={<BlogEditor />} />
             <Route path="/keywords" element={<Keywords />} />
             <Route path="/scheduler" element={<Scheduler />} />
+            <Route path="/leads" element={<Leads />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>

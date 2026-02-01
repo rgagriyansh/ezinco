@@ -10,6 +10,8 @@ import generateRoutes from './routes/generate.js';
 import settingsRoutes from './routes/settings.js';
 import keywordsRoutes from './routes/keywords.js';
 import schedulerRoutes from './routes/scheduler.js';
+import sitemapRoutes from './routes/sitemap.js';
+import leadsRoutes from './routes/leads.js';
 
 // Import services
 import { runScheduledPost } from './services/scheduler.js';
@@ -51,6 +53,8 @@ app.use('/api/generate', generateRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/keywords', keywordsRoutes);
 app.use('/api/scheduler', schedulerRoutes);
+app.use('/api/sitemap', sitemapRoutes);
+app.use('/api/leads', leadsRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
