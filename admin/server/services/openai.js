@@ -7,16 +7,27 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const settingsPath = join(__dirname, '..', 'data', 'settings.json');
 
-// Get OpenAI client with API key from settings
+// Get OpenAI client with API key from environment or settings
 async function getOpenAIClient() {
-  const settingsData = await fs.readFile(settingsPath, 'utf-8');
-  const settings = JSON.parse(settingsData);
+  // First check environment variable (for Railway deployment)
+  let apiKey = process.env.OPENAI_API_KEY;
   
-  if (!settings.openaiApiKey) {
-    throw new Error('OpenAI API key not configured. Please add it in Settings.');
+  // Fallback to settings file (for local development)
+  if (!apiKey) {
+    try {
+      const settingsData = await fs.readFile(settingsPath, 'utf-8');
+      const settings = JSON.parse(settingsData);
+      apiKey = settings.openaiApiKey;
+    } catch (error) {
+      // Settings file might not exist
+    }
   }
   
-  return new OpenAI({ apiKey: settings.openaiApiKey });
+  if (!apiKey) {
+    throw new Error('OpenAI API key not configured. Add OPENAI_API_KEY environment variable in Railway.');
+  }
+  
+  return new OpenAI({ apiKey });
 }
 
 // Get settings for CTA

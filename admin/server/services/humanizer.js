@@ -9,14 +9,27 @@ const settingsPath = join(__dirname, '..', 'data', 'settings.json');
 // Rephrasy AI API endpoint
 const REPHRASY_API_URL = 'https://v2-humanizer.rephrasy.ai/api';
 
-// Get humanizer settings
+// Get humanizer settings from environment or settings file
 async function getHumanizerSettings() {
-  const settingsData = await fs.readFile(settingsPath, 'utf-8');
-  const settings = JSON.parse(settingsData);
+  // First check environment variables (for Railway deployment)
+  let apiKey = process.env.HUMANIZER_API_KEY;
+  let apiUrl = process.env.HUMANIZER_API_URL;
+  
+  // Fallback to settings file (for local development)
+  if (!apiKey) {
+    try {
+      const settingsData = await fs.readFile(settingsPath, 'utf-8');
+      const settings = JSON.parse(settingsData);
+      apiKey = apiKey || settings.humanizerApiKey;
+      apiUrl = apiUrl || settings.humanizerApiUrl;
+    } catch (error) {
+      // Settings file might not exist
+    }
+  }
   
   return {
-    apiKey: settings.humanizerApiKey,
-    apiUrl: settings.humanizerApiUrl || REPHRASY_API_URL
+    apiKey: apiKey || '',
+    apiUrl: apiUrl || REPHRASY_API_URL
   };
 }
 

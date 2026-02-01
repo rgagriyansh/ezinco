@@ -104,9 +104,14 @@ router.post('/api-keys', async (req, res) => {
 router.get('/api-status', async (req, res) => {
   try {
     const settings = await readSettings();
+    // Check both environment variables and settings file
+    const openaiKey = process.env.OPENAI_API_KEY || settings.openaiApiKey;
+    const humanizerKey = process.env.HUMANIZER_API_KEY || settings.humanizerApiKey;
+    const humanizerUrl = process.env.HUMANIZER_API_URL || settings.humanizerApiUrl;
+    
     res.json({
-      openaiConfigured: !!settings.openaiApiKey,
-      humanizerConfigured: !!settings.humanizerApiKey && !!settings.humanizerApiUrl
+      openaiConfigured: !!openaiKey,
+      humanizerConfigured: !!humanizerKey && !!humanizerUrl
     });
   } catch (error) {
     res.status(500).json({ error: 'Failed to check API status' });
