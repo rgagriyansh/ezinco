@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import cron from 'node-cron';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import fs from 'fs/promises';
@@ -58,50 +57,85 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-// Initialize scheduler
-let schedulerJob = null;
+// Scheduler using setInterval (easier to manage dynamically)
+let schedulerInterval = null;
+let currentIntervalMs = null;
 
-async function initializeScheduler() {
+async function getSchedulerSettings() {
+  // Read from environment variables first (for Railway persistence)
+  const envAutoPost = process.env.AUTO_POST_ENABLED === 'true' || process.env.AUTO_POST_ENABLED === '1';
+  const envInterval = parseInt(process.env.POST_INTERVAL_MINUTES) || null;
+  
+  // Read from settings file
+  let settings = { autoPostEnabled: false, postIntervalMinutes: 30 };
   try {
-    // Read from environment variables first (for Railway persistence)
-    const autoPostEnabled = process.env.AUTO_POST_ENABLED === 'true' || process.env.AUTO_POST_ENABLED === '1';
-    const interval = parseInt(process.env.POST_INTERVAL_MINUTES) || 30;
-    
-    // Fallback to settings file for local development
-    let settings = { autoPostEnabled, postIntervalMinutes: interval };
-    
-    if (!process.env.AUTO_POST_ENABLED) {
-      try {
-        const settingsPath = join(__dirname, 'data', 'settings.json');
-        const settingsData = await fs.readFile(settingsPath, 'utf-8');
-        settings = JSON.parse(settingsData);
-      } catch (e) {
-        // Use defaults if file read fails
-      }
-    }
-    
-    const finalAutoPost = autoPostEnabled || settings.autoPostEnabled;
-    const finalInterval = parseInt(process.env.POST_INTERVAL_MINUTES) || settings.postIntervalMinutes || 30;
-    
-    if (finalAutoPost) {
-      // Run every X minutes
-      schedulerJob = cron.schedule(`*/${finalInterval} * * * *`, async () => {
-        console.log(`[Scheduler] Running scheduled post at ${new Date().toISOString()}`);
-        await runScheduledPost();
-      });
-      console.log(`[Scheduler] Auto-posting enabled every ${finalInterval} minutes`);
-    } else {
-      console.log('[Scheduler] Auto-posting is disabled');
-    }
-  } catch (error) {
-    console.error('[Scheduler] Failed to initialize:', error);
+    const settingsPath = join(__dirname, 'data', 'settings.json');
+    const settingsData = await fs.readFile(settingsPath, 'utf-8');
+    settings = JSON.parse(settingsData);
+  } catch (e) {
+    // Use defaults if file read fails
   }
+  
+  return {
+    autoPostEnabled: envAutoPost || settings.autoPostEnabled,
+    postIntervalMinutes: envInterval || settings.postIntervalMinutes || 30
+  };
 }
+
+async function startScheduler() {
+  // Stop existing scheduler if running
+  if (schedulerInterval) {
+    clearInterval(schedulerInterval);
+    schedulerInterval = null;
+    console.log('[Scheduler] Stopped existing scheduler');
+  }
+  
+  const { autoPostEnabled, postIntervalMinutes } = await getSchedulerSettings();
+  
+  if (!autoPostEnabled) {
+    console.log('[Scheduler] Auto-posting is disabled');
+    return;
+  }
+  
+  const intervalMs = postIntervalMinutes * 60 * 1000;
+  currentIntervalMs = intervalMs;
+  
+  console.log(`[Scheduler] Starting auto-posting every ${postIntervalMinutes} minutes`);
+  
+  // Run immediately on start, then every interval
+  schedulerInterval = setInterval(async () => {
+    console.log(`[Scheduler] Running scheduled post at ${new Date().toISOString()}`);
+    try {
+      await runScheduledPost();
+    } catch (error) {
+      console.error('[Scheduler] Error during scheduled post:', error);
+    }
+  }, intervalMs);
+  
+  // Also run one immediately after a short delay
+  setTimeout(async () => {
+    console.log(`[Scheduler] Running initial post at ${new Date().toISOString()}`);
+    try {
+      await runScheduledPost();
+    } catch (error) {
+      console.error('[Scheduler] Error during initial post:', error);
+    }
+  }, 5000); // 5 second delay for initial post
+}
+
+// Restart scheduler (called when settings change)
+async function restartScheduler() {
+  console.log('[Scheduler] Restarting scheduler with new settings...');
+  await startScheduler();
+}
+
+// Make restart function available to routes
+app.set('restartScheduler', restartScheduler);
 
 // Start server
 app.listen(PORT, () => {
   console.log(`Admin server running on http://localhost:${PORT}`);
-  initializeScheduler();
+  startScheduler();
 });
 
-export { schedulerJob };
+export { schedulerInterval, restartScheduler };

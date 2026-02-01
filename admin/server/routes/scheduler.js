@@ -10,6 +10,11 @@ const __dirname = dirname(__filename);
 const settingsPath = join(__dirname, '..', 'data', 'settings.json');
 const blogsPath = join(__dirname, '..', 'data', 'blogs.json');
 
+// Helper to get restart function from app
+function getRestartScheduler(req) {
+  return req.app.get('restartScheduler');
+}
+
 // GET scheduler status
 router.get('/status', async (req, res) => {
   try {
@@ -41,6 +46,12 @@ router.put('/toggle', async (req, res) => {
     
     await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
     
+    // Restart scheduler with new settings
+    const restartScheduler = getRestartScheduler(req);
+    if (restartScheduler) {
+      await restartScheduler();
+    }
+    
     res.json({ 
       autoPostEnabled: settings.autoPostEnabled,
       message: settings.autoPostEnabled ? 'Auto-posting enabled' : 'Auto-posting disabled'
@@ -65,6 +76,13 @@ router.put('/interval', async (req, res) => {
     settings.postIntervalMinutes = intervalMinutes;
     
     await fs.writeFile(settingsPath, JSON.stringify(settings, null, 2));
+    
+    // Restart scheduler with new interval
+    const restartScheduler = getRestartScheduler(req);
+    if (restartScheduler) {
+      await restartScheduler();
+      console.log(`[Scheduler] Interval changed to ${intervalMinutes} minutes, scheduler restarted`);
+    }
     
     res.json({ 
       postIntervalMinutes: settings.postIntervalMinutes,
