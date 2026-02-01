@@ -14,7 +14,8 @@ export function Footer() {
       'How It Works',
       'Pricing',
       'Blog',
-      'Contact'
+      'Contact',
+      'Partner with Us'
     ],
     'Resources': [
       'Help Center',

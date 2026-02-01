@@ -15,13 +15,15 @@ import {
   Testimonials,
   FAQ,
   Partners,
-  FloatingWhatsApp
+  FloatingWhatsApp,
+  JoinAsPartner
 } from './components'
 import { HowItWorksPage } from './pages/HowItWorksPage'
 import { BlogListPage } from './pages/BlogListPage'
 import { BlogPostPage } from './pages/BlogPostPage'
 import { ContactPage } from './pages/ContactPage'
 import { PricingCalculatorPage } from './pages/PricingCalculatorPage'
+import { JoinAsCAPage } from './pages/JoinAsCAPage'
 
 function HomePage() {
   return (
@@ -36,6 +38,7 @@ function HomePage() {
       <Services />
       <Testimonials />
       <Pricing />
+      <JoinAsPartner />
       <FAQ />
       <TargetUsers />
       <CTA />
@@ -58,6 +61,7 @@ function AppContent() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/pricing" element={<PricingCalculatorPage />} />
+          <Route path="/partner" element={<JoinAsCAPage />} />
         </Routes>
       </main>
       {/* Hide footer padding on blog pages to account for fixed CTA */}
