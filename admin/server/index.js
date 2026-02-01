@@ -63,18 +63,35 @@ let schedulerJob = null;
 
 async function initializeScheduler() {
   try {
-    const settingsPath = join(__dirname, 'data', 'settings.json');
-    const settingsData = await fs.readFile(settingsPath, 'utf-8');
-    const settings = JSON.parse(settingsData);
+    // Read from environment variables first (for Railway persistence)
+    const autoPostEnabled = process.env.AUTO_POST_ENABLED === 'true' || process.env.AUTO_POST_ENABLED === '1';
+    const interval = parseInt(process.env.POST_INTERVAL_MINUTES) || 30;
     
-    if (settings.autoPostEnabled) {
-      const interval = settings.postIntervalMinutes || 30;
+    // Fallback to settings file for local development
+    let settings = { autoPostEnabled, postIntervalMinutes: interval };
+    
+    if (!process.env.AUTO_POST_ENABLED) {
+      try {
+        const settingsPath = join(__dirname, 'data', 'settings.json');
+        const settingsData = await fs.readFile(settingsPath, 'utf-8');
+        settings = JSON.parse(settingsData);
+      } catch (e) {
+        // Use defaults if file read fails
+      }
+    }
+    
+    const finalAutoPost = autoPostEnabled || settings.autoPostEnabled;
+    const finalInterval = parseInt(process.env.POST_INTERVAL_MINUTES) || settings.postIntervalMinutes || 30;
+    
+    if (finalAutoPost) {
       // Run every X minutes
-      schedulerJob = cron.schedule(`*/${interval} * * * *`, async () => {
+      schedulerJob = cron.schedule(`*/${finalInterval} * * * *`, async () => {
         console.log(`[Scheduler] Running scheduled post at ${new Date().toISOString()}`);
         await runScheduledPost();
       });
-      console.log(`[Scheduler] Auto-posting enabled every ${interval} minutes`);
+      console.log(`[Scheduler] Auto-posting enabled every ${finalInterval} minutes`);
+    } else {
+      console.log('[Scheduler] Auto-posting is disabled');
     }
   } catch (error) {
     console.error('[Scheduler] Failed to initialize:', error);
