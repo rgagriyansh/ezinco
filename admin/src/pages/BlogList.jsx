@@ -181,7 +181,7 @@ export default function BlogList() {
                           <Edit className="w-4 h-4 text-text-muted" />
                         </Link>
                         <a
-                          href={`https://ezincorporation.in/blog/${blog.slug}`}
+                          href={`https://ezincorporate.in/blog/${blog.slug}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="p-2 hover:bg-surface-light rounded-lg transition-colors"

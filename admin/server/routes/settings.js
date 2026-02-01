@@ -19,7 +19,7 @@ async function readSettings() {
       postIntervalMinutes: 30,
       maxPostsPerDay: 48,
       defaultCTA: 'Ready to start your business? Visit EZincorporation.in for expert assistance!',
-      websiteUrl: 'https://ezincorporation.in',
+      websiteUrl: 'https://ezincorporate.in',
       openaiApiKey: '',
       humanizerApiKey: '',
       humanizerApiUrl: ''

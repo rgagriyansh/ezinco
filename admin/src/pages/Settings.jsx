@@ -300,7 +300,7 @@ export default function SettingsPage() {
               type="url"
               value={settings.websiteUrl}
               onChange={(e) => handleChange('websiteUrl', e.target.value)}
-              placeholder="https://ezincorporation.in"
+              placeholder="https://ezincorporate.in"
               className="w-full bg-surface-light border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary"
             />
           </div>
