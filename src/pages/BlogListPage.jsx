@@ -16,8 +16,8 @@ export function BlogListPage() {
 
   async function fetchBlogs() {
     try {
-      // In production, this would be your API endpoint
-      const res = await fetch('/api/blogs')
+      const apiUrl = import.meta.env.VITE_API_URL || ''
+      const res = await fetch(`${apiUrl}/api/blogs`)
       const data = await res.json()
       // Only show published blogs
       setBlogs(data.filter(b => b.status === 'published'))

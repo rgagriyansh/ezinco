@@ -19,7 +19,8 @@ export function BlogPostPage() {
   async function fetchBlog() {
     setLoading(true)
     try {
-      const res = await fetch('/api/blogs')
+      const apiUrl = import.meta.env.VITE_API_URL || ''
+      const res = await fetch(`${apiUrl}/api/blogs`)
       const blogs = await res.json()
       const found = blogs.find(b => b.slug === slug && b.status === 'published')
       setBlog(found || null)
