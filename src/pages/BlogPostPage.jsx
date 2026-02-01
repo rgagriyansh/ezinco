@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, Clock, Tag, ArrowLeft, Share2, Copy, Check } from 'lucide-react'
 import { BlogCTA } from '../components/BlogCTA'
+import { SEO } from '../components/SEO'
 
 export function BlogPostPage() {
   const { slug } = useParams()
@@ -118,6 +119,21 @@ export function BlogPostPage() {
 
   return (
     <div className="min-h-screen pb-24">
+      <SEO 
+        title={blog.title}
+        description={blog.metaDescription}
+        keywords={blog.tags?.join(', ')}
+        canonical={`https://ezincorporate.in/blog/${blog.slug}`}
+        type="article"
+        article={{
+          title: blog.title,
+          description: blog.metaDescription,
+          publishedAt: blog.publishedAt,
+          updatedAt: blog.updatedAt,
+          url: `https://ezincorporate.in/blog/${blog.slug}`
+        }}
+      />
+      
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-bg via-white to-accent-bg py-12 sm:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">

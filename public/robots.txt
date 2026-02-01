@@ -1,0 +1,9 @@
+# robots.txt for ezincorporate.in
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://ezincorporate.in/sitemap.xml
+
+# Disallow admin paths
+Disallow: /admin

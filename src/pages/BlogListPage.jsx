@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, Clock, Tag, ArrowRight, Search } from 'lucide-react'
 import { BlogCTA } from '../components/BlogCTA'
+import { SEO } from '../components/SEO'
 
 export function BlogListPage() {
   const [blogs, setBlogs] = useState([])
@@ -54,6 +55,13 @@ export function BlogListPage() {
 
   return (
     <div className="min-h-screen pb-24">
+      <SEO 
+        title="Blog - Business Registration & Startup Guides"
+        description="Expert guides on company registration, GST, trademark, compliance, and growing your business in India. Tips for entrepreneurs and startups."
+        keywords="business registration blog, startup guides india, company incorporation tips, GST registration guide, trademark registration"
+        canonical="https://ezincorporate.in/blog"
+      />
+      
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary-bg via-white to-accent-bg py-16 sm:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
