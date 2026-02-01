@@ -1,0 +1,10 @@
+{
+  "autoPostEnabled": false,
+  "postIntervalMinutes": 30,
+  "maxPostsPerDay": 48,
+  "defaultCTA": "Ready to start your business? Visit EZincorporation.in for expert assistance with company registration, compliance, and more!",
+  "websiteUrl": "https://ezincorporation.in",
+  "openaiApiKey": "",
+  "humanizerApiKey": "",
+  "humanizerApiUrl": "https://v2-humanizer.rephrasy.ai/api"
+}
