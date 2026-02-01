@@ -53,9 +53,9 @@ export function Footer() {
                 <i className="fa-solid fa-envelope text-text-dim w-4"></i>
                 hello@ezincorporate.in
               </a>
-              <a href="tel:+919876543210" className="flex items-center gap-2 sm:gap-3 text-text-muted hover:text-primary transition-colors">
+              <a href="tel:+919667153779" className="flex items-center gap-2 sm:gap-3 text-text-muted hover:text-primary transition-colors">
                 <i className="fa-solid fa-phone text-text-dim w-4"></i>
-                +91 98765 43210
+                +91 96671 53779
               </a>
             </div>
           </div>

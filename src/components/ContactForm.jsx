@@ -115,7 +115,7 @@ export function ContactForm() {
               value={formData.phone}
               onChange={handleChange}
               required
-              placeholder="+91 98765 43210"
+              placeholder="+91 96671 53779"
               className="w-full pl-11 pr-4 py-3 rounded-lg border border-border focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </div>

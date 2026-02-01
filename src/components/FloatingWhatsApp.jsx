@@ -57,7 +57,7 @@ export function FloatingWhatsApp() {
                 {['Pricing', 'Timeline', 'Documents'].map((q) => (
                   <a
                     key={q}
-                    href={`https://wa.me/919876543210?text=Hi, I have a question about ${q.toLowerCase()}`}
+                    href={`https://wa.me/919667153779?text=Hi, I have a question about ${q.toLowerCase()}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs rounded-full border border-green-500 text-green-600 hover:bg-green-50 transition-colors"
@@ -67,7 +67,7 @@ export function FloatingWhatsApp() {
                 ))}
               </div>
               <a
-                href="https://wa.me/919876543210?text=Hi, I'm interested in incorporating my company"
+                href="https://wa.me/919667153779?text=Hi, I'm interested in incorporating my company"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-3 sm:mt-4 w-full py-2.5 sm:py-3 bg-green-500 text-white rounded-full flex items-center justify-center gap-2 font-medium text-sm hover:bg-green-600 transition-colors"

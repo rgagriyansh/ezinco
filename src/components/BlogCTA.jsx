@@ -19,7 +19,7 @@ export function BlogCTA() {
           {/* Buttons */}
           <div className="flex items-center gap-2 sm:gap-3">
             <motion.a
-              href="https://wa.me/919876543210?text=Hi,%20I%20want%20to%20know%20more%20about%20company%20registration"
+              href="https://wa.me/919667153779?text=Hi,%20I%20want%20to%20know%20more%20about%20company%20registration"
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
@@ -30,7 +30,7 @@ export function BlogCTA() {
               <span className="hidden sm:inline">WhatsApp</span>
             </motion.a>
             <motion.a
-              href="tel:+919876543210"
+              href="tel:+919667153779"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="flex items-center gap-2 bg-white/20 hover:bg-white/30 text-white px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-colors"

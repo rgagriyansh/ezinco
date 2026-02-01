@@ -147,7 +147,7 @@ export function PricingCalculatorPage() {
                 <h3 className="font-semibold text-text mb-2">Need Help?</h3>
                 <p className="text-text-muted text-sm mb-4">Talk to our experts for personalized guidance</p>
                 <a
-                  href="tel:+919871090091"
+                  href="tel:+919667153779"
                   className="btn-secondary w-full py-2 flex items-center justify-center gap-2"
                 >
                   <i className="fa-solid fa-phone"></i>

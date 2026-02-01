@@ -246,7 +246,7 @@ export function BlogPostPage() {
                 View Pricing
               </a>
               <a
-                href="https://wa.me/919876543210"
+                href="https://wa.me/919667153779"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-8 py-3 bg-white/20 text-white font-semibold rounded-full hover:bg-white/30 transition-colors"

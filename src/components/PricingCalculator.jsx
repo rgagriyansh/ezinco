@@ -280,7 +280,7 @@ export function PricingCalculator() {
         {/* CTA */}
         <div className="space-y-3">
           <a
-            href="https://wa.me/919871090091?text=Hi! I want to register a company. My estimated budget is ₹"
+            href="https://wa.me/919667153779?text=Hi! I want to register a company. My estimated budget is ₹"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full btn-primary py-3 flex items-center justify-center gap-2"

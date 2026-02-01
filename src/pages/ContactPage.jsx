@@ -8,14 +8,14 @@ export function ContactPage() {
     {
       icon: <Phone className="w-6 h-6" />,
       title: 'Phone',
-      value: '+91 98710 90091',
-      link: 'tel:+919871090091'
+      value: '+91 96671 53779',
+      link: 'tel:+919667153779'
     },
     {
       icon: <MessageCircle className="w-6 h-6" />,
       title: 'WhatsApp',
       value: 'Chat with us',
-      link: 'https://wa.me/919871090091'
+      link: 'https://wa.me/919667153779'
     },
     {
       icon: <Mail className="w-6 h-6" />,
