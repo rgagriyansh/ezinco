@@ -10,6 +10,7 @@ import {
   Eye,
   EyeOff
 } from 'lucide-react'
+import { API_URL } from '../api'
 
 export default function SettingsPage() {
   const [settings, setSettings] = useState({
@@ -33,8 +34,8 @@ export default function SettingsPage() {
   async function fetchSettings() {
     try {
       const [settingsRes, statusRes] = await Promise.all([
-        fetch('/api/settings'),
-        fetch('/api/settings/api-status')
+        fetch(`${API_URL}/api/settings`),
+        fetch(`${API_URL}/api/settings/api-status`)
       ])
       
       const settingsData = await settingsRes.json()
@@ -52,7 +53,7 @@ export default function SettingsPage() {
   async function handleSaveSettings() {
     setSaving(true)
     try {
-      await fetch('/api/settings', {
+      await fetch(`${API_URL}/api/settings`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -91,7 +92,7 @@ export default function SettingsPage() {
         return
       }
 
-      await fetch('/api/settings/api-keys', {
+      await fetch(`${API_URL}/api/settings/api-keys`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(keysToUpdate)

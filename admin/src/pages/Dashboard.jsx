@@ -9,6 +9,7 @@ import {
   AlertCircle,
   CheckCircle
 } from 'lucide-react'
+import { API_URL } from '../api'
 
 function StatCard({ icon: Icon, label, value, subValue, color = 'primary' }) {
   const colors = {
@@ -76,9 +77,9 @@ export default function Dashboard() {
   async function fetchData() {
     try {
       const [blogsRes, schedulerRes, apiRes] = await Promise.all([
-        fetch('/api/blogs'),
-        fetch('/api/scheduler/status'),
-        fetch('/api/settings/api-status')
+        fetch(`${API_URL}/api/blogs`),
+        fetch(`${API_URL}/api/scheduler/status`),
+        fetch(`${API_URL}/api/settings/api-status`)
       ])
 
       const blogs = await blogsRes.json()
@@ -103,7 +104,7 @@ export default function Dashboard() {
 
   async function handleManualPost() {
     try {
-      const res = await fetch('/api/scheduler/trigger', { method: 'POST' })
+      const res = await fetch(`${API_URL}/api/scheduler/trigger`, { method: 'POST' })
       const result = await res.json()
       if (result.success) {
         alert(`Blog published: ${result.blog.title}`)

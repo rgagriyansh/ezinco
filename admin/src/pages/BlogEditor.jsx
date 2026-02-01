@@ -11,6 +11,7 @@ import {
   FileText,
   Loader2
 } from 'lucide-react'
+import { API_URL } from '../api'
 
 export default function BlogEditor() {
   const { id } = useParams()
@@ -45,7 +46,7 @@ export default function BlogEditor() {
   async function fetchBlog() {
     setLoading(true)
     try {
-      const res = await fetch(`/api/blogs/${id}`)
+      const res = await fetch(`${API_URL}/api/blogs/${id}`)
       const data = await res.json()
       setBlog(data)
     } catch (error) {
@@ -58,7 +59,7 @@ export default function BlogEditor() {
 
   async function fetchKeywords() {
     try {
-      const res = await fetch('/api/keywords')
+      const res = await fetch(`${API_URL}/api/keywords`)
       const data = await res.json()
       setKeywords(data.keywords || [])
     } catch (error) {
@@ -74,7 +75,7 @@ export default function BlogEditor() {
 
     setGenerating(true)
     try {
-      const res = await fetch('/api/generate/complete-blog', {
+      const res = await fetch(`${API_URL}/api/generate/complete-blog`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -112,7 +113,7 @@ export default function BlogEditor() {
 
     setHumanizing(true)
     try {
-      const res = await fetch('/api/generate/humanize', {
+      const res = await fetch(`${API_URL}/api/generate/humanize`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ text: blog.content })
@@ -139,7 +140,7 @@ export default function BlogEditor() {
     setSaving(true)
     try {
       const method = isEditing ? 'PUT' : 'POST'
-      const url = isEditing ? `/api/blogs/${id}` : '/api/blogs'
+      const url = isEditing ? `${API_URL}/api/blogs/${id}` : `${API_URL}/api/blogs`
       
       const blogData = {
         ...blog,

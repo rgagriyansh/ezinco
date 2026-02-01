@@ -10,6 +10,7 @@ import {
   EyeOff,
   Filter
 } from 'lucide-react'
+import { API_URL } from '../api'
 
 export default function BlogList() {
   const [blogs, setBlogs] = useState([])
@@ -23,7 +24,7 @@ export default function BlogList() {
 
   async function fetchBlogs() {
     try {
-      const res = await fetch('/api/blogs')
+      const res = await fetch(`${API_URL}/api/blogs`)
       const data = await res.json()
       setBlogs(data)
     } catch (error) {
@@ -37,7 +38,7 @@ export default function BlogList() {
     if (!confirm('Are you sure you want to delete this blog?')) return
     
     try {
-      await fetch(`/api/blogs/${id}`, { method: 'DELETE' })
+      await fetch(`${API_URL}/api/blogs/${id}`, { method: 'DELETE' })
       setBlogs(blogs.filter(b => b.id !== id))
     } catch (error) {
       alert('Failed to delete blog')
@@ -47,7 +48,7 @@ export default function BlogList() {
   async function handleTogglePublish(blog) {
     try {
       const endpoint = blog.status === 'published' ? 'unpublish' : 'publish'
-      const res = await fetch(`/api/blogs/${blog.id}/${endpoint}`, { method: 'PUT' })
+      const res = await fetch(`${API_URL}/api/blogs/${blog.id}/${endpoint}`, { method: 'PUT' })
       const updated = await res.json()
       setBlogs(blogs.map(b => b.id === blog.id ? updated : b))
     } catch (error) {

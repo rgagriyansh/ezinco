@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Plus, Trash2, Tag, MessageSquare, Save, Loader2 } from 'lucide-react'
+import { API_URL } from '../api'
 
 export default function Keywords() {
   const [data, setData] = useState({ keywords: [], sentences: [] })
@@ -14,7 +15,7 @@ export default function Keywords() {
 
   async function fetchKeywords() {
     try {
-      const res = await fetch('/api/keywords')
+      const res = await fetch(`${API_URL}/api/keywords`)
       const result = await res.json()
       setData(result)
     } catch (error) {
@@ -29,7 +30,7 @@ export default function Keywords() {
     
     setSaving(true)
     try {
-      const res = await fetch('/api/keywords/keyword', {
+      const res = await fetch(`${API_URL}/api/keywords/keyword`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ keyword: newKeyword.trim() })
@@ -48,7 +49,7 @@ export default function Keywords() {
     if (!confirm(`Delete keyword "${keyword}"?`)) return
     
     try {
-      const res = await fetch(`/api/keywords/keyword/${encodeURIComponent(keyword)}`, {
+      const res = await fetch(`${API_URL}/api/keywords/keyword/${encodeURIComponent(keyword)}`, {
         method: 'DELETE'
       })
       const result = await res.json()
@@ -63,7 +64,7 @@ export default function Keywords() {
     
     setSaving(true)
     try {
-      const res = await fetch('/api/keywords/sentence', {
+      const res = await fetch(`${API_URL}/api/keywords/sentence`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sentence: newSentence.trim() })
@@ -82,7 +83,7 @@ export default function Keywords() {
     if (!confirm('Delete this sentence?')) return
     
     try {
-      const res = await fetch(`/api/keywords/sentence/${index}`, {
+      const res = await fetch(`${API_URL}/api/keywords/sentence/${index}`, {
         method: 'DELETE'
       })
       const result = await res.json()

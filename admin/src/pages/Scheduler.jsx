@@ -9,6 +9,7 @@ import {
   Calendar,
   Loader2
 } from 'lucide-react'
+import { API_URL } from '../api'
 
 export default function Scheduler() {
   const [status, setStatus] = useState(null)
@@ -26,8 +27,8 @@ export default function Scheduler() {
   async function fetchData() {
     try {
       const [statusRes, historyRes] = await Promise.all([
-        fetch('/api/scheduler/status'),
-        fetch('/api/scheduler/history')
+        fetch(`${API_URL}/api/scheduler/status`),
+        fetch(`${API_URL}/api/scheduler/history`)
       ])
       
       const statusData = await statusRes.json()
@@ -45,7 +46,7 @@ export default function Scheduler() {
 
   async function handleToggle() {
     try {
-      const res = await fetch('/api/scheduler/toggle', { method: 'PUT' })
+      const res = await fetch(`${API_URL}/api/scheduler/toggle`, { method: 'PUT' })
       const data = await res.json()
       setStatus(prev => ({ ...prev, autoPostEnabled: data.autoPostEnabled }))
     } catch (error) {
@@ -56,7 +57,7 @@ export default function Scheduler() {
   async function handleTrigger() {
     setTriggering(true)
     try {
-      const res = await fetch('/api/scheduler/trigger', { method: 'POST' })
+      const res = await fetch(`${API_URL}/api/scheduler/trigger`, { method: 'POST' })
       const result = await res.json()
       
       if (result.success) {
@@ -74,7 +75,7 @@ export default function Scheduler() {
 
   async function handleUpdateInterval() {
     try {
-      const res = await fetch('/api/scheduler/interval', {
+      const res = await fetch(`${API_URL}/api/scheduler/interval`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ intervalMinutes: parseInt(interval) })
