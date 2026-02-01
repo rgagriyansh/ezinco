@@ -78,11 +78,15 @@ async function canPost() {
   const settings = await getSettings();
   const blogsData = await getBlogsData();
   
-  if (!settings.autoPostEnabled) {
+  // Check environment variables first, then settings file
+  const autoPostEnabled = process.env.AUTO_POST_ENABLED === 'true' || process.env.AUTO_POST_ENABLED === '1' || settings.autoPostEnabled;
+  const openaiApiKey = process.env.OPENAI_API_KEY || settings.openaiApiKey;
+  
+  if (!autoPostEnabled) {
     return { canPost: false, reason: 'Auto-posting is disabled' };
   }
   
-  if (!settings.openaiApiKey) {
+  if (!openaiApiKey) {
     return { canPost: false, reason: 'OpenAI API key not configured' };
   }
   
