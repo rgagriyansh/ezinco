@@ -76,7 +76,11 @@ function addArticleStructuredData(article) {
   const existing = document.querySelector('script[data-article-schema]')
   if (existing) existing.remove()
   
-  const schema = {
+  // Remove existing breadcrumb schema
+  const existingBreadcrumb = document.querySelector('script[data-breadcrumb-schema]')
+  if (existingBreadcrumb) existingBreadcrumb.remove()
+  
+  const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": article.title,
@@ -84,7 +88,8 @@ function addArticleStructuredData(article) {
     "image": article.image || "https://ezincorporate.in/og-image.png",
     "author": {
       "@type": "Organization",
-      "name": "EZincorporate"
+      "name": "EZincorporate",
+      "url": "https://ezincorporate.in"
     },
     "publisher": {
       "@type": "Organization",
@@ -99,14 +104,48 @@ function addArticleStructuredData(article) {
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": article.url
-    }
+    },
+    "wordCount": article.wordCount || 1000,
+    "inLanguage": "en-IN"
   }
   
-  const script = document.createElement('script')
-  script.type = 'application/ld+json'
-  script.setAttribute('data-article-schema', 'true')
-  script.textContent = JSON.stringify(schema)
-  document.head.appendChild(script)
+  // Breadcrumb schema for better navigation in search results
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://ezincorporate.in"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog",
+        "item": "https://ezincorporate.in/blog"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": article.title,
+        "item": article.url
+      }
+    ]
+  }
+  
+  const articleScript = document.createElement('script')
+  articleScript.type = 'application/ld+json'
+  articleScript.setAttribute('data-article-schema', 'true')
+  articleScript.textContent = JSON.stringify(articleSchema)
+  document.head.appendChild(articleScript)
+  
+  const breadcrumbScript = document.createElement('script')
+  breadcrumbScript.type = 'application/ld+json'
+  breadcrumbScript.setAttribute('data-breadcrumb-schema', 'true')
+  breadcrumbScript.textContent = JSON.stringify(breadcrumbSchema)
+  document.head.appendChild(breadcrumbScript)
 }
 
 export default SEO
